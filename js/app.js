@@ -12,7 +12,7 @@
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+    let currentIndex = array.length, temporaryValue, randomIndex;
 
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
@@ -36,3 +36,28 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+let allCards = document.querySelectorAll('.card');
+let openCards = [];
+
+allCards.forEach(function (card) {
+    card.addEventListener('click', function (e) {
+        openCards.push(card);
+        card.classList.add('open', 'show');
+
+        if (openCards.length >= 2){
+            if (openCards[0].childNodes[1].className == openCards[1].childNodes[1].className){
+                openCards.forEach(function(openCard){
+                    openCard.classList.add('match');
+                });
+            }else {
+                openCards.forEach(function(openCard){
+                    setTimeout(function(){
+                        openCard.classList.remove('open', 'show');
+                    }, 1000);
+                });
+            }
+            openCards = [];
+        }
+    })
+});
