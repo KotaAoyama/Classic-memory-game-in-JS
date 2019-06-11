@@ -1,16 +1,32 @@
-/*
- * Create a list that holds all of your cards
- */
+let cards = [
+    'fa-diamond', 'fa-diamond',
+    'fa-bomb', 'fa-bomb',
+    'fa-paper-plane-o', 'fa-paper-plane-o',
+    'fa-anchor', 'fa-anchor',
+    'fa-cube', 'fa-cube',
+    'fa-leaf', 'fa-leaf',
+    'fa-bicycle', 'fa-bicycle',
+    'fa-bolt', 'fa-bolt',
+];
 
 
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
+function generateCard(card){
+    return `<li class="card" data-card="${card}"><i class="fa ${card}"></i></li>`;
+}
 
-// Shuffle function from http://stackoverflow.com/a/2450976
+
+function initGame() {
+    let deck = document.querySelector('.deck')
+    let cardHTML = shuffle(cards).map(function (card) {
+        return generateCard(card);
+    });
+    deck.innerHTML = cardHTML.join('');
+}
+
+
+initGame();
+
+
 function shuffle(array) {
     let currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -39,25 +55,38 @@ function shuffle(array) {
 
 let allCards = document.querySelectorAll('.card');
 let openCards = [];
+let count = 0;
 
 allCards.forEach(function (card) {
     card.addEventListener('click', function (e) {
-        openCards.push(card);
-        card.classList.add('open', 'show');
 
-        if (openCards.length >= 2){
-            if (openCards[0].childNodes[1].className == openCards[1].childNodes[1].className){
-                openCards.forEach(function(openCard){
-                    openCard.classList.add('match');
-                });
-            }else {
-                openCards.forEach(function(openCard){
-                    setTimeout(function(){
-                        openCard.classList.remove('open', 'show');
+        if (!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match')) {
+            openCards.push(card);
+            card.classList.add('open', 'show');
+            count += 1;
+            
+            if (openCards.length == 2) {
+                // the two cards match
+                if (openCards[0].dataset.card == openCards[1].dataset.card){
+                    openCards[0].classList.add('match');
+                    openCards[1].classList.add('match');
+                    openCards = [];
+                    console.log(cards.length);
+
+                    // all cards match
+                    if (document.querySelectorAll('.match').length == cards.length){
+                        // modal appears
+                    }
+                }else{
+                    // the two cards don't match
+                    setTimeout(function () {
+                        openCards.forEach(function (openCard) {
+                            openCard.classList.remove('open', 'show');
+                        });
+                        openCards = [];
                     }, 1000);
-                });
+                }
             }
-            openCards = [];
         }
-    })
+    });
 });
