@@ -16,7 +16,7 @@ function generateCard(card){
 
 
 function initGame() {
-    let deck = document.querySelector('.deck')
+    let deck = document.querySelector('.deck');
     let cardHTML = shuffle(cards).map(function (card) {
         return generateCard(card);
     });
@@ -55,7 +55,10 @@ function shuffle(array) {
 
 let allCards = document.querySelectorAll('.card');
 let openCards = [];
-let count = 0;
+let moveCount = 0;
+let moves = document.querySelector('.moves');
+moves.innerHTML = moveCount;
+
 
 allCards.forEach(function (card) {
     card.addEventListener('click', function (e) {
@@ -63,7 +66,8 @@ allCards.forEach(function (card) {
         if (!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match')) {
             openCards.push(card);
             card.classList.add('open', 'show');
-            count += 1;
+            moveCount += 1;
+            moves.innerHTML = moveCount;
             
             if (openCards.length == 2) {
                 // the two cards match
