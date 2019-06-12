@@ -61,7 +61,7 @@ moves.innerHTML = moveCount;
 
 
 allCards.forEach(function (card) {
-    card.addEventListener('click', function (e) {
+    card.addEventListener('click', function () {
 
         if (!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match')) {
             openCards.push(card);
@@ -75,11 +75,13 @@ allCards.forEach(function (card) {
                     openCards[0].classList.add('match');
                     openCards[1].classList.add('match');
                     openCards = [];
-                    console.log(cards.length);
+                    
 
                     // all cards match
                     if (document.querySelectorAll('.match').length == cards.length){
+                        stopTimer();
                         // modal appears
+                        
                     }
                 }else{
                     // the two cards don't match
@@ -94,3 +96,47 @@ allCards.forEach(function (card) {
         }
     });
 });
+
+
+// Timer
+const timerOutput = document.querySelector('.timer-output');
+let sec = 0;
+let min = 0;
+let timer;
+
+startTimer();
+
+function startTimer() {
+    timer = setInterval(insertTime, 1000);
+}
+
+function insertTime() {
+    sec++;
+
+    if (sec < 10){
+        sec = `0${sec}`;
+    }
+
+    if (sec >= 60){
+        min++;
+        sec = "00";
+    }
+
+    if (min == 99 && sec == 59){
+        stopTimer();
+    }
+
+    timerOutput.innerHTML = "0" + min + ":" + sec;
+}
+
+function stopTimer() {
+    clearInterval(timer);
+    sec = 0;
+    min = 0;
+}
+
+function restartTimer() {
+    stopTimer();
+    timerOutput.innerHTML = "00:00";
+    startTimer();
+}
