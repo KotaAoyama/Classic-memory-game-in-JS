@@ -27,6 +27,15 @@ function initGame() {
 initGame();
 
 
+const resetButton = document.querySelector('.restart');
+resetButton.addEventListener('click', function () {
+    restartTimer();
+    resetStarRating();
+    resetMoveCount();
+    resetCards();
+});
+
+
 function shuffle(array) {
     let currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -42,23 +51,15 @@ function shuffle(array) {
 }
 
 
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
-
 let allCards = document.querySelectorAll('.card');
 let openCards = [];
 let moveCount = 0;
-let moves = document.querySelector('.moves');
-moves.innerHTML = moveCount;
+let movesOutput = document.querySelector('.moves');
+movesOutput.innerHTML = moveCount;
+const stars = document.querySelectorAll('.fa-star');
 
+// modal
+const modal = document.querySelector('modal');
 
 allCards.forEach(function (card) {
     card.addEventListener('click', function () {
@@ -67,7 +68,9 @@ allCards.forEach(function (card) {
             openCards.push(card);
             card.classList.add('open', 'show');
             moveCount += 1;
-            moves.innerHTML = moveCount;
+            movesOutput.innerHTML = moveCount;
+            // StarRating
+            starRating(moveCount);
             
             if (openCards.length == 2) {
                 // the two cards match
@@ -80,8 +83,15 @@ allCards.forEach(function (card) {
                     // all cards match
                     if (document.querySelectorAll('.match').length == cards.length){
                         stopTimer();
-                        // modal appears
-                        
+                        const timeResult = document.querySelector('.timeResult');
+                        const starsResult = document.querySelector('.starsResult');
+                        const starsOutput = document.querySelector('.stars');
+                        const movesResult = document.querySelector('.movesResult');
+                        timeResult.innerHTML = timerOutput.innerHTML;
+                        starsResult.innerHTML = starsOutput.innerHTML;
+                        movesResult.innerHTML = movesOutput.innerHTML;
+
+                        modal.style.display = "block";
                     }
                 }else{
                     // the two cards don't match
@@ -122,7 +132,7 @@ function insertTime() {
         sec = "00";
     }
 
-    if (min == 99 && sec == 59){
+    if (min == 9 && sec == 59){
         stopTimer();
     }
 
@@ -139,4 +149,39 @@ function restartTimer() {
     stopTimer();
     timerOutput.innerHTML = "00:00";
     startTimer();
+}
+
+
+function starRating(moveCount) {
+    if (moveCount > 24){
+        stars[0].style.cssText = "visibility: hidden";
+    }
+    if (moveCount > 32){
+        stars[1].style.cssText = "visibility: hidden";
+    }
+}
+
+
+function resetStarRating() {
+    stars[0].style.cssText = "";
+    stars[1].style.cssText = "";
+}
+
+
+function resetMoveCount() {
+    moveCount = 0;
+    movesOutput.innerHTML = moveCount;
+}
+
+
+function resetCards() {
+    allCards.forEach(function (card) {
+        card.classList.remove('open', 'show', 'match');
+    })
+}
+
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
 }
