@@ -28,12 +28,14 @@ initGame();
 
 
 const resetButton = document.querySelector('.restart');
-resetButton.addEventListener('click', function () {
+resetButton.addEventListener('click', allReset);
+
+function allReset() {
     restartTimer();
     resetStarRating();
     resetMoveCount();
     resetCards();
-});
+}
 
 
 function shuffle(array) {
@@ -58,8 +60,15 @@ let movesOutput = document.querySelector('.moves');
 movesOutput.innerHTML = moveCount;
 const stars = document.querySelectorAll('.fa-star');
 
-// modal
-const modal = document.querySelector('modal');
+// the modal
+const modal = document.getElementById('myModal');
+const closeButton = document.querySelector('.close');
+
+
+
+
+
+
 
 allCards.forEach(function (card) {
     card.addEventListener('click', function () {
@@ -91,7 +100,7 @@ allCards.forEach(function (card) {
                         starsResult.innerHTML = starsOutput.innerHTML;
                         movesResult.innerHTML = movesOutput.innerHTML;
 
-                        modal.style.display = "block";
+                        showMo();
                     }
                 }else{
                     // the two cards don't match
@@ -180,8 +189,19 @@ function resetCards() {
     })
 }
 
-window.onclick = function(event) {
-  if (event.target == modal) {
+
+function showMo() {
+  modal.style.display = "block";
+}
+
+
+closeButton.onclick = function() {
+  modal.style.display = "none";
+}
+
+
+window.onclick = function(e) {
+  if (e.target == modal) {
     modal.style.display = "none";
   }
 }
