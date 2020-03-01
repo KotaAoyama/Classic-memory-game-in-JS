@@ -1,6 +1,6 @@
 # Memory Game Project
 
-This project is creating the classic memory game in Front End Web Developer Nanodegree course in [Udacity](https://www.udacity.com/).
+This is the classic memory game I created in Front End Web Developer Nanodegree course in [Udacity](https://www.udacity.com/).
 
 
 ## Instruction
