@@ -1,13 +1,13 @@
 # Memory Game Project
 
-This is created in frontend web developer course in [Udacity](https://www.udacity.com/).
-
-This is the classic memory game.
+This project is creating the classic memory game in Front End Web Developer Nanodegree course in [Udacity](https://www.udacity.com/).
 
 
 ## Instruction
 
-Open the index.html file in your browser and the timer starts.
+#### 1. Download or clone code 
 
-When all cards match, you can see your scores and choose to replay.
+#### 2. Open the index.html file in your browser and the timer starts.
+
+#### When all cards match, you can see your scores and choose to replay.
 
