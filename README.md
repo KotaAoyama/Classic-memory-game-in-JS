@@ -1,6 +1,9 @@
 # Memory Game Project
 
+This is created in frontend web developer course in [Udacity](https://www.udacity.com/).
+
 This is the classic memory game.
+
 
 ## Instruction
 
